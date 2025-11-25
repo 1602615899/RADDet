@@ -1,0 +1,17 @@
+ljm:803564:803564 [1] NCCL INFO cudaDriverVersion 12020
+ljm:803564:803564 [1] NCCL INFO Bootstrap : Using bond0:192.168.3.21<0>
+ljm:803564:803564 [1] NCCL INFO NET/Plugin : Plugin load (libnccl-net.so) returned 2 : libnccl-net.so: cannot open shared object file: No such file or directory
+ljm:803564:803564 [1] NCCL INFO NET/Plugin : No plugin found, using internal implementation
+ljm:803564:803604 [1] NCCL INFO NET/IB : No device found.
+ljm:803564:803604 [1] NCCL INFO NET/Socket : Using [0]bond0:192.168.3.21<0>
+ljm:803564:803604 [1] NCCL INFO Using network Socket
+ljm:803564:803604 [1] NCCL INFO comm 0x9497920 rank 1 nranks ljm:803563:803603 [0] NCCL INFO comm 0x8fe0500 rank 0 nranks 2 cudaDev 0ljm:803564:803604 [1] NCCL INFO Setting affinity for GPU 1 toljm:803563:80ljm:803564:803604 [1] NCCL INFO Trees [0] -1/-1/-1->1->0 [1] -1/-1/-1->1->0
+ljm:803564:803604 [1] NCCL INFO P2P Chunksize set to 131072
+ljm:803564:803604 [1] NCCL INFO Channel 00 : 1[1] -> 0[0] via SHM/direct/direct
+ljm:803564:803604 [1] NCCL INFO Channel 01 : 1[1] -> 0[0] via SHM/direct/direct
+ljm:803564:803604 [1] NCCL INFO Connected all rings
+ljm:803564:803604 [1] NCCL INFO Connected all trees
+ljm:803564:803604 [1] NCCL INFO threadThresholds 8/8/64 | 16/8/64 | 512 | 512
+ljm:803564:803604 [1] NCCL INFO 2 coll channels, 0 nvls channels, 2 p2p channels, 2 p2p channels ljm:80356ljm:803564:803604 [1] NCCL INFO comm 0x9497920 rank 1 nranks 2 cudaDev 1 nvmlDev 1 busId 3000 commId 0x245d75cdaf12704b - Init COMPLETE
+ p2p channels, 2 p2p channels per peer
+ljm:803563:803603 [0] NCCL INFO comm 0x8fe0500 rank 0 nranks 2 cudaDev 0 nvmlDev 0 busId 2000 commId 0x245d75cdaf12704b - Init COMPLETE

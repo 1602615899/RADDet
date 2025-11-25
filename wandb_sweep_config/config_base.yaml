@@ -1,0 +1,98 @@
+program: main_pretrain.py
+method: bayes
+metric:
+  goal: minimize
+  name: loss_value
+parameters:
+  decoder_num_heads:
+    max: 8
+    min: 4
+    distribution: int_uniform
+  decoder_embed_dim:
+    max: 1024
+    min: 512
+    distribution: int_uniform
+  decoder_depth:
+    max: 8
+    min: 4
+    distribution: int_uniform
+  warmup_epochs:
+    max: 5
+    min: 1
+    distribution: int_uniform
+  sep_pos_embed:
+    values:
+      - "true"
+      - "false"
+    distribution: categorical
+  norm_pix_loss:
+    values:
+      - "true"
+      - "false"
+    distribution: categorical
+  weight_decay:
+    max: 0.1
+    min: 0.025
+    distribution: uniform
+  num_workers:
+    max: 8
+    min: 1
+    distribution: int_uniform
+  mask_ratio:
+    max: 0.95
+    min: 0.75
+    distribution: uniform
+  batch_size:
+    max: 4
+    min: 1
+    distribution: int_uniform
+  accum_iter:
+    max: 2
+    min: 1
+    distribution: int_uniform
+  pin_mem:
+    values:
+      - "true"
+      - "false"
+    distribution: categorical
+  bias_wd:
+    values:
+      - "true"
+      - "false"
+    distribution: categorical
+  epochs:
+    max: 100
+    min: 10
+    distribution: int_uniform
+  model:
+    values:
+      - mae_rpt_small
+      - mae_rpt_base
+    distribution: categorical
+  blr:
+    max: 0.01
+    min: 0.001
+    distribution: uniform
+  min_lr:
+    max: 0.00001
+    min: 0.000001
+    distribution: uniform
+  decoder_attn_type:
+    values:
+      - Normal
+      - RAD
+    distribution: categorical
+command:
+  - python
+  - main_pretrain.py
+  - "--RADDet_config_path"
+  - "/mnt/SrvUserDisk/ZhangXu/pretrain/rpt/datasets/RADDet_config.json"
+  - "--output_dir"
+  - "./sweep_dir"
+  - "--device"
+  - "cuda:1"
+  - "--data_type"
+  - "RADDet"
+  - "--wandb"
+  - "--comment"
+  - "wandb sweep"

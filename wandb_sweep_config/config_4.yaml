@@ -1,0 +1,48 @@
+name: sweep_Normal_lr_wd
+description: sweep lr, min_lr and weight_decay for Normal attention
+program: main_pretrain.py
+method: bayes
+metric:
+  goal: minimize
+  name: loss_value
+parameters:
+  blr:
+    max: 0.03
+    min: 0.001
+    distribution: uniform
+  min_lr:
+    max: 0.00001
+    min: 0.00000001
+    distribution: uniform
+  weight_decay:
+    max: 0.15
+    min: 0.03
+    distribution: uniform
+command:
+  - ${env}
+  - OMP_NUM_THREADS=4
+  - CUDA_VISIBLE_DEVICES=0,1,2,3
+  - torchrun
+  - --nproc_per_node=4
+  - ${program}
+  - ${args}
+  - --mask_ratio=0.80
+  - --model=mae_rpt_base
+  - --RADDet_config_path=./datasets/RADDet_config.json
+  - --data_type=RADDet
+  - --output_dir=./sweep_dir
+  - --device=cuda:1
+  - --seed=42
+  - --epochs=30
+  - --batch_size=3
+  - --num_workers=4
+  - --warmup_epochs=0
+  - --decoder_num_heads=8
+  - --checkpoint_period=10
+  - --pin_mem
+  - --wandb
+  - --comment=wandb-sweep
+  - --decoder_embed_dim=1024
+  - --decoder_depth=4
+  - --decoder_attn_type=Normal
+  - --mask_with_magnitude

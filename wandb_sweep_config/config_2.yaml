@@ -1,0 +1,58 @@
+name: sweep_v1
+program: main_pretrain.py
+method: bayes
+metric:
+  goal: minimize
+  name: loss_value
+parameters:
+  decoder_embed_dim:
+    values: [512, 1024]
+  decoder_depth:
+    values: [4, 6]
+  decoder_attn_type:
+    values:
+      - Normal
+      - RAD
+    distribution: categorical
+  sep_pos_embed:
+    values: [True, False]
+    distribution: categorical
+  mask_with_magnitude:
+    values: [True, False]
+    distribution: categorical
+  blr:
+    max: 0.05
+    min: 0.005
+    distribution: uniform
+  min_lr:
+    max: 0.00001
+    min: 0.0000001
+    distribution: uniform
+  weight_decay:
+    max: 0.12
+    min: 0.05
+    distribution: uniform
+command:
+  - ${env}
+  - OMP_NUM_THREADS=4
+  - CUDA_VISIBLE_DEVICES=0,1,2,3
+  - torchrun
+  - --nproc_per_node=4
+  - ${program}
+  - ${args}
+  - --mask_ratio=0.80
+  - --model=mae_rpt_base
+  - --RADDet_config_path=./datasets/RADDet_config.json
+  - --data_type=RADDet
+  - --output_dir=./sweep_dir
+  - --device=cuda:1
+  - --seed=42
+  - --epochs=30
+  - --batch_size=3
+  - --num_workers=4
+  - --warmup_epochs=0
+  - --decoder_num_heads=8
+  - --checkpoint_period=10
+  - --pin_mem
+  - --wandb
+  - --comment=wandb-sweep

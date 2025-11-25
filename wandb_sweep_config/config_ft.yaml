@@ -1,0 +1,43 @@
+name: sweep_finetune
+description: sweep finetune parameters
+program: main_finetune.py
+method: grid
+metric:
+  goal: maximize
+  name: best_val_ap
+parameters:
+  weight_decay:
+    values: [0.06, 0.08, 0.10, 0.12, 0.14]
+    distribution: categorical
+  drop_path_rate:
+    values: [0.0, 0.1]
+    distribution: categorical
+command:
+  - ${env}
+  - OMP_NUM_THREADS=2
+  - CUDA_VISIBLE_DEVICES=0,1,2
+  - torchrun
+  - --nproc_per_node=3
+  - ${program}
+  - ${args}
+  - --epochs=40
+  - --batch_size=5
+  - --num_workers=2
+  - --warmup_epochs=0
+  - --model=RADTR_YOLO_tiny
+  - --blr=1e-3
+  - --min_lr=1e-6
+  - --RADDet_config_path=./models/RADDet_finetune/config.json
+  - --data_type=RADDet
+  - --output_dir=./ft_sweep_dir
+  - --dist_eval 
+  - --device=cuda:1
+  - --seed=42
+  - --data_path=not_used
+  - --checkpoint_period=10
+  - --pin_mem
+  - --wandb
+  - --comment=wandb-sweep
+  - --attn_type=Normal
+  - --distributed
+  - --wandb
